@@ -20,7 +20,6 @@ interface AuthContextData {
    isValidating: boolean;
    error: boolean;
    login: (email: string, password: string) => void;
-   loadUserFromCookies: (userData: User) => void;
    logout: () => void;
    setError: (value: boolean) => void;
 }
@@ -30,10 +29,6 @@ export const AuthContext = createContext({} as AuthContextData);
 export function AuthProvider ({ children } : AuthProviderProps) {
    const [isValidating, setIsValidating] = useState(false);
    const [error, setError] = useState(false);
-   
-   async function loadUserFromCookies(userData: User) {
-      
-   }
 
    const login = async (email: string, password: string) => {
       setIsValidating(true);
@@ -75,7 +70,6 @@ export function AuthProvider ({ children } : AuthProviderProps) {
       isValidating,
       login,
       logout,
-      loadUserFromCookies,
       setError
    }}>
       {children}
