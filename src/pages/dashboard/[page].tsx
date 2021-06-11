@@ -1,4 +1,4 @@
-import next, { GetServerSideProps } from 'next';
+import { GetServerSideProps } from 'next';
 import jwt from 'jsonwebtoken';
 
 import { api } from '../../services/api';
@@ -6,12 +6,12 @@ import { api } from '../../services/api';
 import UserDashboard  from './_user';
 import AdminDashboard  from './_admin';
 
-export default function dashboard ({ admin, usersData, page, previous, next }) {
+export default function dashboard ({ admin, usersData, page }) {
 
    return (
       admin === false 
          ? <UserDashboard/> //true
-         : <AdminDashboard usersData={usersData} page={page} previous={previous} next={next}/> //false
+         : <AdminDashboard usersData={usersData} page={page}/> //false
    )
 }
 
@@ -22,7 +22,6 @@ export const getServerSideProps: GetServerSideProps = async ({ req, params }) =>
 
    let users = null;  
    let admin = null;
-   let previous = page === '1' ? false : true;
 
    try {
       if (token) {
@@ -30,12 +29,8 @@ export const getServerSideProps: GetServerSideProps = async ({ req, params }) =>
          admin = verify.admin;
 
          if (admin === true) {
-            users = await api.get(`/users/${Number(page)+1}`, { headers: {'Authorization': `Bearer ${token}`} });
-   
-            let next = users.data.users.length === 0 ? false : true;
-            
             users = await api.get(`/users/${page}`, { headers: {'Authorization': `Bearer ${token}`} });
-
+            
             if (Number(page) <= 0) {
                return {
                   redirect: {
@@ -43,6 +38,8 @@ export const getServerSideProps: GetServerSideProps = async ({ req, params }) =>
                      destination: `/dashboard/1`
                   }
                }
+            } else {
+               
             }
 
             if (users.data.users.length <= 0) {
@@ -56,14 +53,11 @@ export const getServerSideProps: GetServerSideProps = async ({ req, params }) =>
 
             return {
                props: {
-                  previous,
-                  next,
                   admin, 
                   usersData: users.data.users,
                   page
                },
             }
-            
          } else {
             return {
                props: {
