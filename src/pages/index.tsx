@@ -1,20 +1,33 @@
 import { GetServerSideProps } from 'next';
 import jwt from 'jsonwebtoken';
 import { Form } from '@unform/web';
-import { VscLoading } from 'react-icons/vsc'
+import { VscLoading } from 'react-icons/vsc';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.min.css'; 
 
 import Input from '../components/Input';
 import styles from '../styles/Home.module.scss';
 import { useAuth } from '../context/authContext';
+import { useEffect } from 'react';
+
+interface IData {
+  email: string;
+  password: string;
+}
 
 export default function Home() {
   const { login, error, setError, isValidating } = useAuth();
 
-  async function handleSubmit(data, { reset }) {
+  async function handleSubmit(data: IData) {
     login(data.email, data.password);
     setError(false);
-    reset();
   }
+  
+  useEffect(() => {
+    if (error !== false) {
+      toast.error('⚠️ Usuário ou senha inválidos');
+    }
+  }, [error])
 
   return (
     <div className={styles.container}>
@@ -22,7 +35,6 @@ export default function Home() {
         <Form onSubmit={handleSubmit}>
             <Input name="email" label="E-mail" type="email"/>
             <Input name="password" label="Senha" type="password"/>
-            { error ? <p className={styles.error}>email ou senha incorretos</p> : null } 
             <button type="submit"> { isValidating ? <VscLoading className={styles.loadingButton}/> : <>Entrar</> } </button>
         </Form>
       </div>

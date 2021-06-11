@@ -10,7 +10,7 @@ import styles from '../../styles/Dashboard.module.scss';
 
 import { api } from '../../services/api';
 
-export default function AdminDashboard({ usersData, page }) {
+export default function AdminDashboard({ usersData, page, previous, next }) {
   const router = useRouter()
   const { logout } = useAuth();
 
@@ -89,8 +89,23 @@ export default function AdminDashboard({ usersData, page }) {
         </table>
 
         <div className={styles.pagination}>
-          <button type="button" onClick={() => router.replace(`/dashboard/${Number(page)-1}`)}>anterior</button>
-          <button type="button" onClick={() => router.replace(`/dashboard/${Number(page)+1}`)}>próximo</button>
+          { previous === false ? (
+              < button type="button" className={styles.false}
+              > Anterior </button>
+          ) : (
+              < button type="button" 
+                onClick={() => router.replace(`/dashboard/${Number(page)-1}`)}
+              > anterior </button>
+          )}
+
+          { next === false ? (
+              < button type="button" className={styles.false}
+              > próximo </button>
+          ) : (
+              < button type="button" 
+                onClick={() => router.replace(`/dashboard/${Number(page)+1}`)}
+              > próximo </button>
+          )}
         </div>
       </div>
 
