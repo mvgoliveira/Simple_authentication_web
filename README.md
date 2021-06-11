@@ -11,7 +11,7 @@ A aplicação foi criada com finalidade de por em prática a utilização de aut
 - Redirecionamento de rotas da aplicação.
 
 
-#### :desktop_computer: Páginas da aplicação
+### :desktop_computer: Páginas da aplicação
 
 <img src="https://user-images.githubusercontent.com/53785487/108212836-1d003b00-710d-11eb-8253-96ddacaaadde.png" width="800px"/>
 
