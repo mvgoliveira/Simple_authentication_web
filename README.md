@@ -1,4 +1,4 @@
-# :rocket: Gobarber: aplicação frontend em React
+# :rocket: Simple authentication: aplicação frontend em NextJs
  API do gobarber em NodeJs, desenvolvida no Bootcamp GoStack 9.0 da rocketseat
  
 
