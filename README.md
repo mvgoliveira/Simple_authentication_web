@@ -13,7 +13,7 @@ A aplicação foi criada com finalidade de por em prática a utilização de aut
 
 ### :desktop_computer: Páginas da aplicação
 
-<img src="https://user-images.githubusercontent.com/53785487/108212836-1d003b00-710d-11eb-8253-96ddacaaadde.png" width="800px"/>
+<img src="https://user-images.githubusercontent.com/53785487/121787847-f627b200-cb9e-11eb-9ab3-cf511fa8a7ff.png" width="600px"/>
 
 ### 📁 Instalação
 
