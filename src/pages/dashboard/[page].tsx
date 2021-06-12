@@ -6,12 +6,12 @@ import { api } from '../../services/api';
 import UserDashboard  from './_user';
 import AdminDashboard  from './_admin';
 
-export default function dashboard ({ admin, usersData, page, previous, next }) {
+export default function dashboard ({ admin, usersData, page, previous, next, token }) {
 
    return (
       admin === false 
          ? <UserDashboard/> //true
-         : <AdminDashboard usersData={usersData} page={page} previous={previous} next={next}/> //false
+         : <AdminDashboard usersData={usersData} page={page} previous={previous} next={next} token={token}/> //false
    )
 }
 
@@ -60,7 +60,8 @@ export const getServerSideProps: GetServerSideProps = async ({ req, params }) =>
                   next,
                   admin, 
                   usersData: users.data.users,
-                  page
+                  page,
+                  token
                },
             }
             

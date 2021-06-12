@@ -5,7 +5,7 @@ import '../styles/globals.scss'
 function MyApp({ Component, pageProps }) {
   return (
     <AuthProvider>
-      <ToastContainer autoClose={3000}/>
+      <ToastContainer enableMultiContainer autoClose={3000} />
       <Component {...pageProps} />
     </AuthProvider>
   )

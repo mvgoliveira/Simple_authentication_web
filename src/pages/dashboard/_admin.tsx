@@ -1,8 +1,13 @@
 import { useState } from 'react';
 import { useRouter } from 'next/router';
 import { Form } from '@unform/web';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.min.css'; 
 
 import { BsFillGearFill } from 'react-icons/bs';
+import { FaTrashAlt, FaWindowClose } from 'react-icons/fa';
+import { FcCheckmark } from 'react-icons/fc';
+import { HiX } from 'react-icons/hi';
 import Input from '../../components/Input';
 
 import { useAuth } from '../../context/authContext';
@@ -10,7 +15,20 @@ import styles from '../../styles/Dashboard.module.scss';
 
 import { api } from '../../services/api';
 
-export default function AdminDashboard({ usersData, page, previous, next }) {
+interface IData {
+  name: string;
+  email: string; 
+  newPassword: string; 
+  confirmNewPassword: string;
+}
+
+interface IUser {
+  admin: string;
+  name: string;
+  email: string;
+}
+
+export default function AdminDashboard({ usersData, page, previous, next, token }) {
   const router = useRouter()
   const { logout } = useAuth();
 
@@ -23,12 +41,12 @@ export default function AdminDashboard({ usersData, page, previous, next }) {
     router.replace("/");
   }
 
-  async function handleToggleConfigs(index) {
+  async function handleToggleConfigs(index : number) {
     setIsOpening(!isOpening);
     setUserIndexConfig(index);
   }
 
-  async function handleSubmit(data) {
+  async function handleSubmit(data: IData) {
     const {name, email, newPassword, confirmNewPassword} = data;
     
     let userNewConfigs = {
@@ -45,8 +63,16 @@ export default function AdminDashboard({ usersData, page, previous, next }) {
     } catch (error) {}
   }
 
+  async function handleDeleteUser(index: number) {
+    try {
+      await api.delete(`/users/${usersData[index].id}`, { headers: {'Authorization': `Bearer ${token}`}})
+      router.reload();
+    } catch (error) {}
+  }
+
   return (
     <div className={styles.container}>
+      <ToastContainer enableMultiContainer autoClose={false} containerId="ContainerPrivado"/>
       <div className={styles.leftContainer}>
         <table>
           <thead>
@@ -54,11 +80,12 @@ export default function AdminDashboard({ usersData, page, previous, next }) {
               <th>Nome</th>
               <th>Email</th>
               <th></th>
+              <th></th>
             </tr>
           </thead>
-          
+
           <tbody>
-            { usersData.map((user, index: number) => {
+            { usersData.map((user: IUser, index: number) => {
               return (
                 <tr key={index}>
                   {user.admin ? (
@@ -70,14 +97,24 @@ export default function AdminDashboard({ usersData, page, previous, next }) {
                           <BsFillGearFill color="aaa"/>
                         </button>
                       </td>
+                      <td>
+                        <button>
+                          <FaTrashAlt color="aaa" />
+                        </button>
+                      </td>
                     </>
                   ) : (
                     <>
                       <td>{user.name}</td>
                       <td>{user.email}</td>
                       <td>
-                        <button onClick={() => handleToggleConfigs((index))}>
+                        <button onClick={() => handleToggleConfigs(index)}>
                           <BsFillGearFill color="000"/>
+                        </button>
+                      </td>
+                      <td>
+                        <button>
+                          <FaTrashAlt color="000" onClick={() => handleDeleteUser(index)}/>
                         </button>
                       </td>
                     </>
@@ -123,7 +160,7 @@ export default function AdminDashboard({ usersData, page, previous, next }) {
                 <Input name="confirmNewPassword" label="Confirme a nova Senha" type="password"/>
                 <div className={styles.buttonContainer}>
                   <button type="submit"> Salvar </button>
-                  <button type="button" onClick={handleToggleConfigs}> Cancelar </button>
+                  <button type="button" onClick={() => handleToggleConfigs(0)}> Cancelar </button>
                 </div>
             </Form>
           </span>
