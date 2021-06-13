@@ -2,6 +2,7 @@ import { GetServerSideProps } from 'next';
 import jwt from 'jsonwebtoken';
 import { Form } from '@unform/web';
 import { VscLoading } from 'react-icons/vsc';
+import { RiLoginBoxFill } from 'react-icons/ri';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.min.css'; 
 
@@ -32,6 +33,10 @@ export default function Home() {
   return (
     <div className={styles.container}>
       <div className={styles.inputCard}>
+        <article>
+          <RiLoginBoxFill size={40}/>
+          <h1>Login</h1>
+        </article>
         <Form onSubmit={handleSubmit}>
             <Input name="email" label="E-mail" type="email"/>
             <Input name="password" label="Senha" type="password"/>

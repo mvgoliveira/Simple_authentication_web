@@ -19,7 +19,13 @@ a {
 }
 
 body {
-  background: #34488f;
+  background: hsla(190, 48%, 21%, 1);
+
+  background: linear-gradient(10deg, hsla(190, 48%, 21%, 1) 0%, hsla(207, 41%, 27%, 1) 100%);
+  
+  background: -moz-linear-gradient(10deg, hsla(190, 48%, 21%, 1) 0%, hsla(207, 41%, 27%, 1) 100%);
+  
+  background: -webkit-linear-gradient(10deg, hsla(190, 48%, 21%, 1) 0%, hsla(207, 41%, 27%, 1) 100%);
 }
 
 table {
