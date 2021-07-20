@@ -33,13 +33,6 @@ A aplicação foi criada com finalidade de por em prática a utilização de aut
   yarn dev
 ```
 
-
-
-### **📝 Licença**
-
-Esse projeto está sob a licença MIT. Veja o arquivo [LICENSE](https://github.com/mvgoliveira/Simple_authentication_web/blob/main/LICENSE) para mais detalhes.
-
-
 <hr>
 
 Feito com :hearts: por **[Marcus Oliveira](https://www.linkedin.com/in/marcus-oliveira-3b92011a7/)**
